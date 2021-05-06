@@ -1,10 +1,6 @@
 ﻿using Business.Concrete;
-using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
-using Entities.Concrete;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ConsoleUI
 {
@@ -12,27 +8,30 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //BrandManager brandManager = new BrandManager(new EfBrandDal());
-            //brandManager.Add(new Brand {BrandName = "BMW" });
-            //brandManager.Add(new Brand {BrandName = "Jeep" });
+            //var carManager = new CarManager(new EfCarDal());
+            //carManager.Update(new Entities.Concrete.Car
+            //{
+            //    CarId=17,
+            //    BrandId = 6,
+            //    ColorId = 6,it
+            //    ModelYear = 1111,
+            //    DailyPrice = 1111111,
+            //    Description = "deneme2"
+            //});
 
-            //ColorManager colorManager = new ColorManager(new EfColorDal());
-            //colorManager.Add(new Color {ColorName = "Beyaz" });
-            //colorManager.Add(new Color {ColorName = "Siyah" });
+            CarTest();
 
-            CarManager carManager = new CarManager(new EfCarDal());
-            //carManager.Add(new Car {BrandId = 1, ColorId = 1, ModelYear = 1998, DailyPrice = 50000, Description = "Araç manuel vites" });
-            //carManager.Add(new Car {BrandId = 1, ColorId = 1, ModelYear = 2002, DailyPrice = 95000, Description = "Araç manuel vites" });
-            //carManager.Add(new Car {BrandId = 2, ColorId = 2, ModelYear = 2008, DailyPrice = 150000, Description = "Araç manuel vites" });
-            //carManager.Add(new Car {BrandId = 2, ColorId = 2, ModelYear = 2015, DailyPrice = 250000, Description = "Araç otomatik vites" });
-            //carManager.Add(new Car {BrandId = 2, ColorId = 2, ModelYear = 2020, DailyPrice = 500000, Description = "Araç otomatik vites" });
 
-            foreach (var car in carManager.GetAll())
+
+        }
+
+        private static void CarTest()
+        {
+            var carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetCarDetails())
             {
-                Console.WriteLine("Id:" + car.Id + " Yıl:" + car.ModelYear + " Brand Id:" + car.BrandId + " Color Id:" + car.ColorId + " Daily Price:" + car.DailyPrice + " Açıklama:" + car.Description);
+                Console.WriteLine("Id:" + car.CarId + "  Yıl:" + car.ModelYear + "  Brand Name:" + car.BrandName + "  Color Name:" + car.ColorName + "  Daily Price:" + car.DailyPrice + "  Açıklama:" + car.Description);
             }
-
-
         }
     }
 }

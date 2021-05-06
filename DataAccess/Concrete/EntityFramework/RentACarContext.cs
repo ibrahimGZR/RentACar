@@ -15,6 +15,14 @@ namespace DataAccess.Concrete.EntityFramework
                 @"Server=(localdb)\mssqllocaldb;Database=RentACar;Trusted_connection=true");
         }
 
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    //fluent mapping
+        //    //modelBuilder.Entity<Car>().Property(c => c.CarId).HasColumnName("Id");
+        //    //modelBuilder.Entity<Brand>().Property(b => b.BrandId).HasColumnName("Id");
+        //    //modelBuilder.Entity<Color>().Property(co => co.ColorId).HasColumnName("Id");
+        //}
+
         public DbSet<Car> Cars { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Color> Colors { get; set; }
