@@ -8,21 +8,70 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //var carManager = new CarManager(new EfCarDal());
-            //carManager.Update(new Entities.Concrete.Car
-            //{
-            //    CarId=17,
-            //    BrandId = 6,
-            //    ColorId = 6
-            //    ModelYear = 1111,
-            //    DailyPrice = 1111111,
-            //    Description = "deneme2"
-            //});
+            //UserAdd();
+            //CustomerAdd();
 
-            CarTest();
+            //CarTest();
 
 
+            RentalAdd();
 
+        }
+
+        private static void RentalAdd()
+        {
+            var RentalManager = new RentalManager(new EfRentalDal());
+            var result = RentalManager.Add(new Entities.Concrete.Rental
+            {
+                CarId = 1,
+                CustomerId = 2,
+                RentDate = DateTime.Now.Date
+            });
+            Console.WriteLine(result.Message);
+        }
+
+        private static void UserAdd()
+        {
+            var UserManager = new UserManager(new EfUserDal());
+            UserManager.Add(new Entities.Concrete.User
+            {
+                FirstName = "İbrahim",
+                LastName = "Gezer",
+                Email = "ibrahim@gmail.com",
+                Password = "123"
+            });
+            UserManager.Add(new Entities.Concrete.User
+            {
+                FirstName = "Salim",
+                LastName = "Yanık",
+                Email = "salim@gmail.com",
+                Password = "1234"
+            });
+            UserManager.Add(new Entities.Concrete.User
+            {
+                FirstName = "Fatma",
+                LastName = "Üzer",
+                Email = "fatnma@gmail.com",
+                Password = "12345"
+            });
+        }
+
+        private static void CustomerAdd()
+        {
+            var CustomerManager = new CustomerManager(new EfCustomerDal());
+            CustomerManager.Add(new Entities.Concrete.Customer
+            {
+                UserId = 1,
+                CompanyName = "Gezer Ltd. Şti."
+            });
+            CustomerManager.Add(new Entities.Concrete.Customer
+            {
+                UserId = 2
+            });
+            CustomerManager.Add(new Entities.Concrete.Customer
+            {
+                UserId = 3
+            });
         }
 
         private static void CarTest()
