@@ -13,7 +13,7 @@ namespace ConsoleUI
             //{
             //    CarId=17,
             //    BrandId = 6,
-            //    ColorId = 6,it
+            //    ColorId = 6
             //    ModelYear = 1111,
             //    DailyPrice = 1111111,
             //    Description = "deneme2"
@@ -28,9 +28,17 @@ namespace ConsoleUI
         private static void CarTest()
         {
             var carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarDetails())
+            var result = carManager.GetCarDetails();
+            if (result.Success==true)
             {
-                Console.WriteLine("Id:" + car.CarId + "  Yıl:" + car.ModelYear + "  Brand Name:" + car.BrandName + "  Color Name:" + car.ColorName + "  Daily Price:" + car.DailyPrice + "  Açıklama:" + car.Description);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("Id:" + car.CarId + "  Yıl:" + car.ModelYear + "  Brand Name:" + car.BrandName + "  Color Name:" + car.ColorName + "  Daily Price:" + car.DailyPrice + "  Açıklama:" + car.Description);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
     }
