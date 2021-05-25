@@ -25,7 +25,7 @@ namespace Business.Concrete
             if (car.DailyPrice < 0)
             {
                 //magic strings
-                
+
                 return new ErrorResult(Messages.CarDailyPriceInvalid);
             }
             _carDal.Add(car);
@@ -44,14 +44,20 @@ namespace Business.Concrete
             //İş kodlar
             //Yetkisi var mı?
 
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
         }
-
-        public IDataResult<List<CarDetailDto>>  GetCarDetails()
+        public IDataResult<List<Car>> GetById(int id)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.CarId == id).ToList());
         }
-
+        public IDataResult<List<CarDetailDto>> GetCarsDetails()
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(), Messages.CarDetailsListed);
+        }
+        public IDataResult<List<CarDetailDto>> GetCarsDetailsById(int id)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetailsById(id));
+        }
         public IDataResult<List<Car>> GetCarsBrandId(int id)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id).ToList());

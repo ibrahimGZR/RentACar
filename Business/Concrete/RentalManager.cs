@@ -43,19 +43,29 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
         }
 
-        public IDataResult<List<Rental>> GetRentalByCarId(int id)
+        public IDataResult<List<Rental>> GetById(int id)
+        {
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r=>r.Id==id).ToList());
+        }
+
+        public IDataResult<List<Rental>> GetRentalsByCarId(int id)
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CarId == id).ToList());
         }
 
-        public IDataResult<List<Rental>> GetRentalByCustomerId(int id)
+        public IDataResult<List<Rental>> GetRentalsByCustomerId(int id)
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CustomerId == id).ToList());
         }
 
-        public IDataResult<List<RentalDto>> GetRentalDetails()
+        public IDataResult<List<RentalDto>> GetRentalsDetails()
         {
-            return new SuccessDataResult<List<RentalDto>>(_rentalDal.GetRantalDetails());
+            return new SuccessDataResult<List<RentalDto>>(_rentalDal.GetRantalsDetails());
+        }
+
+        public IDataResult<List<RentalDto>> GetRentalsDetailsById(int id)
+        {
+            return new SuccessDataResult<List<RentalDto>>(_rentalDal.GetRantalsDetailsById(id));
         }
 
         public IResult Update(Rental rental)

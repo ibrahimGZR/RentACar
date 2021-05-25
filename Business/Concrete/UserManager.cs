@@ -5,6 +5,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -33,7 +34,12 @@ namespace Business.Concrete
             //İş kodlar
             //Yetkisi var mı?
 
-            return new SuccessDataResult<List<User>>(_userDal.GetAll());
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(),Messages.UsersListed);
+        }
+
+        public IDataResult<List<User>> GetById(int id)
+        {
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(u=>u.UserId==id).ToList());
         }
 
         public IResult Update(User user)

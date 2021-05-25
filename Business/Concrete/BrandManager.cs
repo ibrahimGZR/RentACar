@@ -5,6 +5,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -26,12 +27,29 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandAdded);
         }
 
+        public IResult Delete(Brand brand)
+        {
+            _brandDal.Delete(brand);
+            return new SuccessResult(Messages.BrandDeleted);
+        }
+
         public IDataResult<List<Brand>> GetAll()
         {
             //İş kodlar
             //Yetkisi var mı?
 
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),Messages.BrandsListed);
+        }
+
+        public IDataResult<List<Brand>> GetById(int id)
+        {
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(b => b.BrandId == id).ToList());
+        }
+
+        public IResult Update(Brand brand)
+        {
+            _brandDal.Update(brand);
+            return new SuccessResult(Messages.BrandUpdated);
         }
     }
 }

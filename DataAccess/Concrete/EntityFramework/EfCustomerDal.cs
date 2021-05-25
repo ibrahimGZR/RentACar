@@ -11,7 +11,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCustomerDal : EfEntityRepositoryBase<Customer, RentACarContext>, ICustomerDal
     {
-        public List<CustomerDto> GetCustomerDetails()
+        public List<CustomerDto> GetCustomersDetails()
         {
             using (RentACarContext context = new RentACarContext())
             {
@@ -20,11 +20,32 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.UserId equals u.UserId
                              select new CustomerDto
                              {
-                                 CustomerId=c.CustomerId,
-                                 FirstName=u.FirstName,
-                                 LastName=u.LastName,
-                                 Email=u.Email,
-                                 CompanyName=c.CompanyName
+                                 CustomerId = c.CustomerId,
+                                 FirstName = u.FirstName,
+                                 LastName = u.LastName,
+                                 Email = u.Email,
+                                 CompanyName = c.CompanyName
+                             };
+                return result.ToList();
+            }
+
+        }
+
+        public List<CustomerDto> GetCustomersDetailsById(int id)
+        {
+            using (RentACarContext context = new RentACarContext())
+            {
+                var result = from c in context.Customers
+                             where c.CustomerId == id
+                             join u in context.Users
+                             on c.UserId equals u.UserId
+                             select new CustomerDto
+                             {
+                                 CustomerId = c.CustomerId,
+                                 FirstName = u.FirstName,
+                                 LastName = u.LastName,
+                                 Email = u.Email,
+                                 CompanyName = c.CompanyName
                              };
                 return result.ToList();
             }

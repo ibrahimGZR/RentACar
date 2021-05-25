@@ -6,6 +6,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -34,12 +35,22 @@ namespace Business.Concrete
             //İş kodlar
             //Yetkisi var mı?
 
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(),Messages.CustomersListed);
         }
 
-        public IDataResult<List<CustomerDto>> GetCustomerDetails()
+        public IDataResult<List<Customer>> GetById(int id)
         {
-            return new SuccessDataResult<List<CustomerDto>>(_customerDal.GetCustomerDetails());
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(c=>c.CustomerId==id).ToList());
+        }
+
+        public IDataResult<List<CustomerDto>> GetCustomersDetails()
+        {
+            return new SuccessDataResult<List<CustomerDto>>(_customerDal.GetCustomersDetails());
+        }
+
+        public IDataResult<List<CustomerDto>> GetCustomersDetailsById(int id)
+        {
+            return new SuccessDataResult<List<CustomerDto>>(_customerDal.GetCustomersDetailsById(id));
         }
 
         public IResult Update(Customer customer)
