@@ -2,6 +2,7 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -25,17 +26,18 @@ namespace Business.Concrete
         public IResult Add(Car car)
         {
             //business codes
-            if (car.DailyPrice < 0)
+            IResult result = BusinessRules.Run(
+                CheckIfCarNameExists(car.CarName));
+            if (result != null)
             {
-                //magic strings
-
-                return new ErrorResult(Messages.CarDailyPriceInvalid);
+                return result;
             }
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
 
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
@@ -71,10 +73,23 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id).ToList());
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
+        }
+
+
+        private IResult CheckIfCarNameExists(string carName)
+        {
+            //aynı isimde ürün ismi varmı
+            var result = _carDal.GetAll(c => c.CarName == carName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.CarNameAlreadyExists);
+            }
+            return new SuccessResult();
         }
     }
 }
