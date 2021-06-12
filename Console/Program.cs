@@ -14,7 +14,7 @@ namespace ConsoleUI
             //CarTest();
 
 
-            RentalAdd();
+            //RentalAdd();
 
         }
 
@@ -33,26 +33,23 @@ namespace ConsoleUI
         private static void UserAdd()
         {
             var UserManager = new UserManager(new EfUserDal());
-            UserManager.Add(new Entities.Concrete.User
+            UserManager.Add(new Core.Entities.Concrete.User
             {
                 FirstName = "İbrahim",
                 LastName = "Gezer",
-                Email = "ibrahim@gmail.com",
-                Password = "123"
+                Email = "ibrahim@gmail.com"
             });
-            UserManager.Add(new Entities.Concrete.User
+            UserManager.Add(new Core.Entities.Concrete.User
             {
                 FirstName = "Salim",
                 LastName = "Yanık",
-                Email = "salim@gmail.com",
-                Password = "1234"
+                Email = "salim@gmail.com"
             });
-            UserManager.Add(new Entities.Concrete.User
+            UserManager.Add(new Core.Entities.Concrete.User
             {
                 FirstName = "Fatma",
                 LastName = "Üzer",
-                Email = "fatnma@gmail.com",
-                Password = "12345"
+                Email = "fatnma@gmail.com"
             });
         }
 

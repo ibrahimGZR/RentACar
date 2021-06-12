@@ -1,6 +1,7 @@
 ﻿using Core.DataAccess;
 using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework.Contexts;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -22,7 +23,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join ca in context.Cars
                              on r.CarId equals ca.CarId
                              join u in context.Users
-                             on c.UserId equals u.UserId
+                             on c.UserId equals u.Id
                              join b in context.Brands
                              on ca.BrandId equals b.BrandId
                              join co in context.Colors
@@ -65,7 +66,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join ca in context.Cars
                              on r.CarId equals ca.CarId
                              join u in context.Users
-                             on c.UserId equals u.UserId
+                             on c.UserId equals u.Id
                              join b in context.Brands
                              on ca.BrandId equals b.BrandId
                              join co in context.Colors

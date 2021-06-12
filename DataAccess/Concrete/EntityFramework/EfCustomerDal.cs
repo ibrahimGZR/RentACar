@@ -1,5 +1,6 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework.Contexts;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -17,7 +18,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from c in context.Customers
                              join u in context.Users
-                             on c.UserId equals u.UserId
+                             on c.UserId equals u.Id
                              select new CustomerDto
                              {
                                  CustomerId = c.CustomerId,
@@ -38,7 +39,7 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from c in context.Customers
                              where c.CustomerId == id
                              join u in context.Users
-                             on c.UserId equals u.UserId
+                             on c.UserId equals u.Id
                              select new CustomerDto
                              {
                                  CustomerId = c.CustomerId,
