@@ -2,6 +2,7 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -23,6 +24,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
@@ -39,6 +41,7 @@ namespace Business.Concrete
 
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Delete(Car car)
@@ -47,6 +50,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
+        [CacheAspect] //key,value
         public IDataResult<List<Car>> GetAll()
         {
             //İş kodlar
@@ -54,18 +58,23 @@ namespace Business.Concrete
 
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
         }
+
         public IDataResult<List<Car>> GetById(int id)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.CarId == id).ToList());
         }
+
         public IDataResult<List<CarDetailDto>> GetCarsDetails()
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(), Messages.CarDetailsListed);
         }
+
         public IDataResult<List<CarDetailDto>> GetCarsDetailsById(int id)
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetailsById(id));
         }
+
+        [CacheAspect] //key,value
         public IDataResult<List<Car>> GetCarsBrandId(int id)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id).ToList());
@@ -76,6 +85,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id).ToList());
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
