@@ -17,11 +17,11 @@ namespace DataAccess.Concrete.EntityFramework
             using (RentACarContext context = new RentACarContext())
             {
                 var result = from c in context.Customers
-                             join u in context.Users
-                             on c.UserId equals u.Id
+                             join u in context.Users on c.UserId equals u.Id
                              select new CustomerDto
                              {
                                  CustomerId = c.CustomerId,
+                                 UserId = c.UserId,
                                  FirstName = u.FirstName,
                                  LastName = u.LastName,
                                  Email = u.Email,
@@ -38,11 +38,11 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from c in context.Customers
                              where c.CustomerId == id
-                             join u in context.Users
-                             on c.UserId equals u.Id
+                             join u in context.Users on c.UserId equals u.Id
                              select new CustomerDto
                              {
                                  CustomerId = c.CustomerId,
+                                 UserId = c.UserId,
                                  FirstName = u.FirstName,
                                  LastName = u.LastName,
                                  Email = u.Email,

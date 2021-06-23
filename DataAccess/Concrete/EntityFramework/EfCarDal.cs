@@ -19,19 +19,22 @@ namespace DataAccess.Concrete.EntityFramework
             using (RentACarContext context = new RentACarContext())
             {
                 var result = from c in context.Cars
-                             join b in context.Brands
-                             on c.BrandId equals b.BrandId
-                             join co in context.Colors
-                             on c.ColorId equals co.ColorId
+                             join b in context.Brands on c.BrandId equals b.BrandId
+                             join co in context.Colors on c.ColorId equals co.ColorId
                              select new CarDetailDto
                              {
-                                 CarId =c.CarId,
-                                 CarName=c.CarName,
-                                 BrandName=b.BrandName,
+                                 CarId = c.CarId,
+                                 BrandId = c.BrandId,
+                                 ColorId = c.ColorId,
+                                 CarName = c.CarName,
+                                 BrandName = b.BrandName,
                                  ColorName = co.ColorName,
-                                 ModelYear=c.ModelYear,
-                                 DailyPrice=c.DailyPrice,
-                                 Description=c.Description
+                                 ModelYear = c.ModelYear,
+                                 DailyPrice = c.DailyPrice,
+                                 Description = c.Description,
+                                 CarImage = (from i in context.CarImages
+                                             where (c.CarId == i.CarId)
+                                             select i.ImagePath).FirstOrDefault()
                              };
                 return result.ToList();
             }
@@ -43,19 +46,22 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from c in context.Cars
                              where c.CarId == id
-                             join b in context.Brands
-                             on c.BrandId equals b.BrandId
-                             join co in context.Colors
-                             on c.ColorId equals co.ColorId
+                             join b in context.Brands on c.BrandId equals b.BrandId
+                             join co in context.Colors on c.ColorId equals co.ColorId
                              select new CarDetailDto
                              {
                                  CarId = c.CarId,
+                                 BrandId = c.BrandId,
+                                 ColorId = c.ColorId,
                                  CarName = c.CarName,
                                  BrandName = b.BrandName,
                                  ColorName = co.ColorName,
                                  ModelYear = c.ModelYear,
                                  DailyPrice = c.DailyPrice,
-                                 Description = c.Description
+                                 Description = c.Description,
+                                 CarImage = (from i in context.CarImages
+                                             where (c.CarId == i.CarId)
+                                             select i.ImagePath).FirstOrDefault()
                              };
                 return result.ToList();
             }
