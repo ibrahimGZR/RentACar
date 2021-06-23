@@ -48,24 +48,24 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r=>r.Id==id).ToList());
         }
 
-        public IDataResult<List<Rental>> GetRentalsByCarId(int id)
+        public IDataResult<List<RentalDetailDto>> GetRentalsDetailsByCarId(int id)
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CarId == id).ToList());
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalsDetails(r => r.CarDto.CarId == id).ToList());
         }
 
-        public IDataResult<List<Rental>> GetRentalsByCustomerId(int id)
+        public IDataResult<List<RentalDetailDto>> GetRentalsDetailsByCustomerId(int id)
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CustomerId == id).ToList());
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalsDetails(r => r.CustomerDto.CustomerId == id).ToList());
         }
 
-        public IDataResult<List<RentalDto>> GetRentalsDetails()
+        public IDataResult<List<RentalDetailDto>> GetRentalsDetails()
         {
-            return new SuccessDataResult<List<RentalDto>>(_rentalDal.GetRantalsDetails());
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalsDetails());
         }
 
-        public IDataResult<List<RentalDto>> GetRentalsDetailsById(int id)
+        public IDataResult<List<RentalDetailDto>> GetRentalsDetailsById(int id)
         {
-            return new SuccessDataResult<List<RentalDto>>(_rentalDal.GetRantalsDetailsById(id));
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalsDetails(r=>r.Id==id));
         }
 
         public IResult Update(Rental rental)

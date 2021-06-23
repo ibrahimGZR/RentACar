@@ -43,14 +43,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(c=>c.CustomerId==id).ToList());
         }
 
-        public IDataResult<List<CustomerDto>> GetCustomersDetails()
+        public IDataResult<List<CustomerDetailDto>> GetCustomersDetails()
         {
-            return new SuccessDataResult<List<CustomerDto>>(_customerDal.GetCustomersDetails());
+            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomersDetails());
         }
 
-        public IDataResult<List<CustomerDto>> GetCustomersDetailsById(int id)
+        public IDataResult<List<CustomerDetailDto>> GetCustomersDetailsById(int id)
         {
-            return new SuccessDataResult<List<CustomerDto>>(_customerDal.GetCustomersDetailsById(id));
+            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomersDetails(c=>c.CustomerId==id));
         }
 
         public IResult Update(Customer customer)

@@ -71,18 +71,18 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarsDetailsById(int id)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetailsById(id));
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(c=>c.CarId==id));
         }
 
         [CacheAspect] //key,value
-        public IDataResult<List<Car>> GetCarsBrandId(int id)
+        public IDataResult<List<CarDetailDto>> GetCarsDetailsByBrandId(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id).ToList());
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(c => c.BrandId == id).ToList());
         }
 
-        public IDataResult<List<Car>> GetCarsByColorId(int id)
+        public IDataResult<List<CarDetailDto>> GetCarsDetailsByColorId(int id)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id).ToList());
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(c => c.ColorId == id).ToList());
         }
 
         [CacheRemoveAspect("ICarService.Get")]

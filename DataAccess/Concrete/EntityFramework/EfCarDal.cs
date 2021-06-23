@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, RentACarContext>, ICarDal
     {
-        public List<CarDetailDto> GetCarsDetails()
+        public List<CarDetailDto> GetCarsDetails(Expression<Func<CarDetailDto, bool>> filter = null)
         {
             using (RentACarContext context = new RentACarContext())
             {
@@ -36,35 +36,10 @@ namespace DataAccess.Concrete.EntityFramework
                                              where (c.CarId == i.CarId)
                                              select i.ImagePath).FirstOrDefault()
                              };
-                return result.ToList();
+                return filter == null ? result.ToList() : result.Where(filter).ToList();
             }
         }
 
-        public List<CarDetailDto> GetCarsDetailsById(int id)
-        {
-            using (RentACarContext context = new RentACarContext())
-            {
-                var result = from c in context.Cars
-                             where c.CarId == id
-                             join b in context.Brands on c.BrandId equals b.BrandId
-                             join co in context.Colors on c.ColorId equals co.ColorId
-                             select new CarDetailDto
-                             {
-                                 CarId = c.CarId,
-                                 BrandId = c.BrandId,
-                                 ColorId = c.ColorId,
-                                 CarName = c.CarName,
-                                 BrandName = b.BrandName,
-                                 ColorName = co.ColorName,
-                                 ModelYear = c.ModelYear,
-                                 DailyPrice = c.DailyPrice,
-                                 Description = c.Description,
-                                 CarImage = (from i in context.CarImages
-                                             where (c.CarId == i.CarId)
-                                             select i.ImagePath).FirstOrDefault()
-                             };
-                return result.ToList();
-            }
-        }
+       
     }
 }
